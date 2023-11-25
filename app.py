@@ -2,6 +2,8 @@ from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import StreamingResponse
 from PIL import Image, ImageDraw, ImageFont
 import io
+from fastapi.middleware.cors import CORSMiddleware
+
 
 app = FastAPI()
 
@@ -49,3 +51,18 @@ async def process_image(file: UploadFile = File(...)):
     img_byte_arr = img_byte_arr.getvalue()
 
     return StreamingResponse(io.BytesIO(img_byte_arr), media_type="image/jpeg")
+
+
+origins = [
+    "http://localhost:3000",  # Allow your frontend running on localhost:3000
+    "http://localhost:8000",  # If you also have frontend components on this port
+    # Add other origins as needed
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,  # List of origins that are allowed to make requests
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods
+    allow_headers=["*"],  # Allows all headers
+)
