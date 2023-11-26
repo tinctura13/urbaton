@@ -2,16 +2,12 @@ import abc
 from typing import Optional
 
 import cv2
-import torch
 import numpy as np
+import torch
+from src.helper import boxes_from_mask, pad_img_to_modulo, resize_max_size
 from loguru import logger
 
-from helper import (
-    boxes_from_mask,
-    resize_max_size,
-    pad_img_to_modulo,
-)
-from schema import Config, HDStrategy
+from src.schema import Config, HDStrategy
 
 
 class InpaintModel:

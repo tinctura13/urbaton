@@ -5,7 +5,6 @@ import torch
 from PIL import Image
 from transformers import OwlViTForObjectDetection, OwlViTProcessor
 
-
 OFFSET = 20  # Set the offset value for the mask
 
 # Initialize OwlViT processor and model

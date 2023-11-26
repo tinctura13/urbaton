@@ -2,8 +2,8 @@ import gc
 
 import torch
 
-from schema import Config
-from .lama import LaMa
+from src.models.lama import LaMa
+from src.schema import Config
 
 models = {
     "lama": LaMa,

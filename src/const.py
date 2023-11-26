@@ -14,12 +14,8 @@ DEFAULT_MODEL_DIR = os.getenv(
 
 
 class Config(BaseModel):
-    host: str = "127.0.0.1"
-    port: int = 8080
     model: str = DEFAULT_MODEL
     device: str = DEFAULT_DEVICE
-    gui: bool = False
-    no_gui_auto_close: bool = False
     model_dir: str = DEFAULT_MODEL_DIR
     input: str = None
     output_dir: str = None

@@ -1,16 +1,16 @@
+import hashlib
 import io
 import os
 import sys
 from typing import List, Optional
-
 from urllib.parse import urlparse
+
 import cv2
-from PIL import Image, ImageOps, PngImagePlugin
 import numpy as np
 import torch
 from loguru import logger
+from PIL import Image, ImageOps, PngImagePlugin
 from torch.hub import download_url_to_file, get_dir
-import hashlib
 
 
 def md5sum(filename):

@@ -1,14 +1,18 @@
-FROM python:3.9
+FROM python:3.10.11-slim-buster
 
-WORKDIR /app
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    software-properties-common \
+    libsm6 libxext6 ffmpeg libfontconfig1 libxrender1 libgl1-mesa-glx \
+    curl gcc build-essential
 
-COPY app.py /app
-COPY font.ttf /app
+RUN pip install --upgrade pip && \
+    pip install torch==1.13.1 torchvision==0.14.1 --extra-index-url https://download.pytorch.org/whl/cpu && \
+    pip install --no-cache-dir fastapi uvicorn Pillow python-multipart opencv-python loguru numpy transformers
 
-RUN pip install --no-cache-dir fastapi uvicorn Pillow python-multipart
+WORKDIR /
 
-EXPOSE 80
+COPY /src /src
 
-ENV NAME World
+EXPOSE 8080
 
-CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "src.app:app", "--host", "0.0.0.0", "--port", "8080"]

@@ -4,13 +4,9 @@ import cv2
 import numpy as np
 import torch
 
-from helper import (
-    norm_img,
-    get_cache_path_by_url,
-    load_jit_model,
-)
-from models.base import InpaintModel
-from schema import Config
+from src.helper import get_cache_path_by_url, load_jit_model, norm_img
+from src.models.base import InpaintModel
+from src.schema import Config
 
 LAMA_MODEL_URL = os.environ.get(
     "LAMA_MODEL_URL",
