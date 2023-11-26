@@ -1,8 +1,9 @@
-import torch
 import gc
 
-from lama import LaMa
+import torch
+
 from schema import Config
+from .lama import LaMa
 
 models = {
     "lama": LaMa,
