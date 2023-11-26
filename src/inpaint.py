@@ -1,5 +1,6 @@
 import time
 
+import cv2
 import numpy as np
 from loguru import logger
 from PIL import Image
@@ -30,6 +31,7 @@ def inpaint(image: Image, class_name: str, threshold: float) -> Image:
         logger.info(f"No objects detected for '{class_name}', skipping inpainting.")
         return Image.fromarray(np_image.astype(np.uint8))
 
+    #
     config = Config(
         hd_strategy=HDStrategy.CROP,
         hd_strategy_crop_margin=10,
@@ -43,4 +45,4 @@ def inpaint(image: Image, class_name: str, threshold: float) -> Image:
     logger.info(f"Processing time for '{class_name}': {(time.time() - start) * 1000}ms")
 
     # Update the image with the result for the next iteration
-    return Image.fromarray(res_np_img.astype(np.uint8))
+    return Image.fromarray(cv2.cvtColor(res_np_img.astype(np.uint8), cv2.COLOR_BGR2RGB))
