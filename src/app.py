@@ -2,9 +2,9 @@ import io
 import json
 
 from fastapi import FastAPI, File, Form, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from PIL import Image
-from pydantic import BaseModel
 
 from .inpaint import inpaint
 
@@ -21,13 +21,6 @@ async def health_check():
     return {"status": "healthy"}
 
 
-# Define a Pydantic model for each text item
-class TextItem(BaseModel):
-    class_name: str
-    prompt: str
-    threshold: float
-
-
 @app.post("/process-image/")
 async def process_image(file: bytes = File(...), classes: str = Form(...)):
     try:
@@ -39,7 +32,6 @@ async def process_image(file: bytes = File(...), classes: str = Form(...)):
             image = image.convert('RGB')
             
         for class_name, threshold in class_thresholds.items():
-            print(class_name, threshold)
             image = inpaint(image, class_name, threshold)
 
         img_byte_arr = io.BytesIO()
@@ -52,3 +44,17 @@ async def process_image(file: bytes = File(...), classes: str = Form(...)):
         raise HTTPException(status_code=422, detail="Invalid JSON format in classes")
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+origins = [
+    "http://localhost:3000",  # Allow your frontend running on localhost:3000
+    "http://localhost:8080",  # If you also have frontend components on this port
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,  # List of origins that are allowed to make requests
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods
+    allow_headers=["*"],  # Allows all headers
+)

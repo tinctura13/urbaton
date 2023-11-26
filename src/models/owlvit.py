@@ -31,7 +31,7 @@ def detect_classes(image: Image, target: str, threshold: float) -> Tuple[np.ndar
     mask_image = Image.fromarray(mask * 255)
 
     # Convert PIL Images to NumPy arrays for LaMa model processing
-    np_image = np.array(image.convert("RGB"))
-    np_mask = np.array(mask_image.convert("L"))
-
-    return np_image, np_mask
+    # np_image = np.array(image.convert("RGB"))
+    # np_mask = np.array(mask_image.convert("L"))
+    
+    return np.array(image), np.array(mask_image)

@@ -31,7 +31,7 @@ def inpaint(image: Image, class_name: str, threshold: float) -> Image:
         return Image.fromarray(np_image.astype(np.uint8))
 
     config = Config(
-        hd_strategy=HDStrategy.ORIGINAL,
+        hd_strategy=HDStrategy.CROP,
         hd_strategy_crop_margin=10,
         hd_strategy_crop_trigger_size=1000,
         hd_strategy_resize_limit=2048,
